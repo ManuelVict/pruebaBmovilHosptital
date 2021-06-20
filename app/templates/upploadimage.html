@@ -1,0 +1,28 @@
+{%load static%}
+{% block content%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js"
+        integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8=" crossorigin="anonymous"></script>
+</head>
+<body>
+    <font color="#fffff" face="arial">
+        <h2> Sala: Recepcion de imagenes </h2>
+        <div class="container">
+            <form method="POST" enctype="multipart/form-data">
+                {% csrf_token %}
+                {{form.as_table}}
+                <button class="btn btn-danger width-100 btn-lg" type="submit">Enviar</button>
+                <a href="javascript: history.go(-1)" class="btn btn-danger width-100 btn-lg">Cancelar</a>
+            </form>
+        </div>
+</body>
+</html>
+{% endblock %}

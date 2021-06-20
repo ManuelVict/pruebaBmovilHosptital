@@ -1,0 +1,91 @@
+{%load static%}
+{% block content%}
+<!DOCTYPE html>
+<html>
+<head>
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+<link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+<link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+<link href="{% static 'css/chat.css' %}" rel="stylesheet">
+<script   src="https://code.jquery.com/jquery-3.1.1.min.js"   integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="   crossorigin="anonymous"></script>
+</head>
+<body>
+<font color="#fffff" face="arial">
+<h2> Chat Asginacion de citas, Sala: {{room}} </h2>
+
+<div id="display">
+
+<!-- <div class="container darker">
+  <b>Tom</b><p>Hello Everyone, How Are You Guys Doing?</p>
+  <span class="time-left">20th, April 2021</span>
+</div> -->
+
+</div>
+
+<script>
+    $(document).ready(function(){
+
+setInterval(function(){
+    $.ajax({
+        type: 'GET',
+        url : "/getMessages/{{room}}/",
+        success: function(response){
+            console.log(response);
+            $("#display").empty();
+            for (var key in response.messages)
+            {
+              
+                var temp=("<div class='container darker'><b> ID user:"+response.messages[key].user+"</b><p>"
+                                                             +response.messages[key].value+"</p><span class='time-left'>"
+                                                             +response.messages[key].date+"</span></div>"
+                                                             ); 
+                $("#display").append(temp);
+            }
+        },
+        error: function(response){
+            alert('An error occured')
+        }
+    });
+},1000);
+})
+</script>
+
+
+<div class="container">
+
+    <form id="post-form">
+        {% csrf_token %}
+        <input type="hidden" name="username" id="username" value="{{username}} "required />
+        <input type="hidden" name="idRom" id="idRom" value="{{roomDetails.id}}" required />
+        <input type="text" name="message" id="message" width="100px" required  />
+        <input class="btn btn-danger width-100 btn-lg" type="submit" value="Send" required >
+        <a href="{%url 'sendimage'%}" class="btn btn-danger width-100 btn-lg">Subir imagen</a>
+    </form>
+</div>
+<a href="{%url 'index'%}" class="btn btn-danger width-100 btn-lg">Volver a inicio</a>
+</body>
+
+<script type="text/javascript">
+  $(document).on('submit','#post-form',function(e){
+    e.preventDefault();
+
+    $.ajax({
+      type:'POST',
+      url:'/send',
+      data:{
+          username:$('#username').val(),
+          idRom:$('#idRom').val(),
+          message:$('#message').val(),
+        csrfmiddlewaretoken:$('input[name=csrfmiddlewaretoken]').val(),
+      },
+      success: function(data){
+        //alert(data)
+      }
+    });
+    document.getElementById('message').value = ''
+  });
+</script>
+
+</html>
+{% endblock %}

@@ -1,0 +1,33 @@
+{%load static%}
+{% block content%}
+<!DOCTYPE html>
+<html>
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css"
+        integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,700&display=swap" rel="stylesheet">
+    <link href="https://unpkg.com/ionicons@4.5.10-0/dist/css/ionicons.min.css" rel="stylesheet">
+    <link href="{% static 'css/chat.css' %}" rel="stylesheet">
+</head>
+<body>
+    <div align="center">
+        <font color="#fffff" face="arial">
+        <h2>Chat asignación de citas Clinica Sanfrancisco</h2>
+    </div>
+    <div class="container">
+        <form id="post-form" method="POST" action="checkview">
+            {% csrf_token %}
+            <label>Situación</label>
+            <select name="room_name" id="room_name" width="100px">
+                <option value="Urgencias">Urgencias</option>
+                <option value="Asignacion de citas" selected>Asignacion de citas</option>
+                <option value="PQR">PQR</option>
+            </select>
+            <input class="btn btn-danger width-100 btn-lg btn-block" type="submit" value="Ingresar a la sala">
+        </form>
+    </div>
+    <a href="{%url 'index'%}" class="btn btn-danger width-100 btn-lg">Volver a inicio</a>
+</body>
+</html>
+{% endblock %}
