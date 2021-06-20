@@ -1,0 +1,8 @@
+Considerations:
+
+-Please make a SUPERUSER in the console for the test admin options
+
+-the project have a simple register form but these users no are admin 
+
+
+-to test the api, the address is http://127.0.0.1:8000/api
